@@ -1,16 +1,16 @@
+
 <?php
 
-session_start();
-require_once "./Model/produtoModel.php";
+session_start(); //banco de dados
+require_once "./Model/ProdutoModel.php";
 
 class ProdutoController{
 
     public function telaCadastro(){
-        require "View/produtoCadastrar.php";
+        require "View/UsuarioCadastrar.php";
     }
 
     public function cadastrar(){
-        // echo $_POST['']
         $nomeProduto = $_POST['nomeProduto'];
         $valorVenda = $_POST['valorVenda'];
         $qtdDisponivel = $_POST ['qtdDisponivel'];
@@ -18,16 +18,37 @@ class ProdutoController{
 
         $produto = new Produto ($nomeProduto, $valorVenda, $qtdDisponivel, $dataValidade);
         $produto ->salvar();
-        header ('LOcation: /PBE/PB_PHP/atividade01/produto/telaCadastro');
+        header('Location: /PBE/PB_PHP/atividade01/produto/telaCadastro');
         exit;
-        
     }
 
     public function listarProduto(){
-        $produto = Produto::listar();
-                echo"<pre>";
+        // session_destroy();
+        $produto = produto::listar();
+        echo"<pre>";
         print_r($produto);
         echo"</pre>";
         require 'View/produtoListar.php';
+
+    }
+
+    public function telaEditar(){
+        $produto = produto::buscar($_GET['id']); // busca qual produto vai editar
+        require 'View/produtoEditar.php';
+    }
+
+    public function atualizar(){
+        $produto = new produto($_POST['nomeProduto'], $_POST ['qtdDisponivel'], $_POST ['valorProduto'], $_POST ['dataValidade']);
+        $produto->atualizar($_GET['id']);
+        header('Location:/PBE/PB_PHP/atividade01/produto/telaEditar?id='.($_GET['id']));
+        exit;
+    }
+
+    public function excluir(){
+        produto::excluir($_GET['id']); 
+        header('Location: /PBE/PB_PHP/atividade01/produto/listar');
+        exit;
     }
 }
+
+ 
