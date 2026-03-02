@@ -6,19 +6,22 @@
     <title>Lista de Usuarios</title>
 </head>
 <body>
-    <a href= "/PBE/PB_PHP/MVCExemplo/usuario/telaCadastrar">Ir para tela
+    <a href= "/PBE/PB_PHP/MVCExemplo/usuario/telaCadastro">Voltar para tela inicial</a>
     <h2>Usuários</h2>;
     <table border="1">
         <tr>
-            <th>Nome</th>
-            <th>Email</th>
-            <th>Ações</th>
+            <td>Nome</td>
+            <td>Email</td>
+            <td>Editar</td>
         </tr>
-        <?php foreach($usuarios as $u): ?>
+        <?php foreach($usuario as $id => $u): ?>
             <tr>
                 <td><?= $u['nome']?></td>
                 <td><?= $u['email']?></td>
-                <td>proxima aula</td>
+                <td><a href="/PBE/PB_PHP/MVCExemplo/usuario/telaEditar?id=<?= $id?>">Editar</a>
+
+                 <td><a href="/PBE/PB_PHP/MVCExemplo/usuario/excluir?id=<?= $id?>">Excluir</a>
+            </td>
             </tr>
         <?php endforeach; ?>
     </table>

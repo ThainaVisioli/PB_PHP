@@ -20,11 +20,30 @@ class UsuarioController{
     }
 
     public function listarUsuarios(){
-        $usuarios = Usuario::listar();
+        // session_destroy();
+        $usuario = Usuario::listar();
         echo"<pre>";
-        print_r($usuarios);
+        print_r($usuario);
         echo"</pre>";
         require 'View/usuarioListar.php';
 
+    }
+
+    public function telaEditar(){
+        $usuario = Usuario::buscar($_GET['id']); // busca qual usuario vai editar
+        require 'View/usuarioEditar.php';
+    }
+
+    public function atualizar(){
+        $usuario = new Usuario($_POST['nome'], $_POST ['email']);
+        $usuario->atualizar($_GET['id']);
+        header('Location:/PBE/PB_PHP/MVCExemplo/usuario/telaEditar?id='.($_GET['id']));
+        exit;
+    }
+
+    public function excluir(){
+        Usuario::excluir($_GET['id']); 
+        header('Location: /PBE/PB_PHP/MVCExemplo/usuario/listar');
+        exit;
     }
 }
